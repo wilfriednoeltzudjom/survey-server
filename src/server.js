@@ -18,7 +18,7 @@ function startServer() {
   setupEnvironmentVariables();
   setupLogger();
 
-  const PORT = process.env.SERVER_PORT;
+  const PORT = process.env.PORT || process.env.SERVER_PORT;
   webServer
     .start(PORT)
     .then(() => {
