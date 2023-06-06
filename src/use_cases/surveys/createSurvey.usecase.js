@@ -61,6 +61,7 @@ module.exports = function buildCreateSurvey(dependencies) {
       },
       function (error) {
         if (error) logger.error(MESSAGES.SURVEY_PDF_GENERATION_ERROR(survey, error));
+        throw error;
       }
     );
   }
