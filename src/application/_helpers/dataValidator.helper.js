@@ -70,6 +70,18 @@ function removeNullishInString(value) {
     .trim();
 }
 
+function removeNullishInObject(object) {
+  const response = {};
+  Object.keys(object).forEach((property) => {
+    const value = object[property];
+    if (isValidValue(value)) {
+      response[property] = value;
+    }
+  });
+
+  return response;
+}
+
 module.exports = {
   isNullish,
   isString,
@@ -83,4 +95,5 @@ module.exports = {
   toLowerCase,
   toUpperCase,
   removeNullishInString,
+  removeNullishInObject,
 };

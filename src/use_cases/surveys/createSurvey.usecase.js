@@ -4,12 +4,13 @@ const { BadRequestError } = require('../../application/_helpers/errors');
 const { getEnergyRenovationPremiumsSituations } = require('../../application/_helpers/energyRenovationPremiumEligibility.helper');
 const { createFileObjectFromPath } = require('../../application/_helpers/file.helper');
 const surveyHelper = require('../../application/_helpers/survey.helper');
+const { removeNullishInObject } = require('../../application/_helpers/dataValidator.helper');
 
 module.exports = function buildCreateSurvey(dependencies) {
   const { fileManager, fiscalInformationUtilities, htmlCompiler, pdfGenerator, logger } = dependencies;
 
   async function execute(surveyData = {}, { user } = {}) {
-    const survey = new Survey({ ...surveyData, createdBy: user.id });
+    const survey = new Survey(removeNullishInObject({ ...surveyData, createdBy: user.id }));
     await survey.validate();
     await ensureTaxNoticeIsValid(survey);
     await ensureSurveyDoesNotExist(survey);
