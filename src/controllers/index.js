@@ -5,7 +5,8 @@ const fiscalInformationUtilities = require('../infrastructure/fiscal_information
 const htmlCompiler = require('../infrastructure/html_compiler');
 const pdfGenerator = require('../infrastructure/pdf_generator');
 const securityUtilities = require('../infrastructure/security');
+const logger = require('../infrastructure/logger');
 
-const dependencies = { fileManager, fiscalInformationUtilities, htmlCompiler, pdfGenerator, securityUtilities };
+const dependencies = { fileManager, fiscalInformationUtilities, htmlCompiler, pdfGenerator, securityUtilities, logger };
 
 module.exports = { authController: buildAuthControler(dependencies), surveyController: buildSurveyControler(dependencies) };
