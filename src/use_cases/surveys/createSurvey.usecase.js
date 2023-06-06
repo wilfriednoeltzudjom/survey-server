@@ -56,18 +56,11 @@ module.exports = function buildCreateSurvey(dependencies) {
       { bodyTemplate },
       {},
       async function (filepath) {
-        logger.info(filepath);
-        logger.info(filepath);
-        try {
-          const uploadResponse = await fileManager.uploadFile({ file: createFileObjectFromPath(filepath) });
-          Object.assign(survey, uploadResponse);
-        } catch (error) {
-          logger.info(error.message);
-        }
+        const uploadResponse = await fileManager.uploadFile({ file: createFileObjectFromPath(filepath) });
+        Object.assign(survey, uploadResponse);
       },
       function (error) {
         if (error) logger.error(MESSAGES.SURVEY_PDF_GENERATION_ERROR(survey, error));
-        throw error;
       }
     );
   }
