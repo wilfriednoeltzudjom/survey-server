@@ -17,11 +17,16 @@
         padding: 0;
         font-family: 'Tahoma', 'Arial', 'Georama', sans-serif;
         font-size: 1rem;
+        text-transform: uppercase;
       }
 
       .form-group {
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         page-break-inside: avoid;
+      }
+
+      .form-group > span:first-child {
+        text-decoration: underline;
       }
 
       .form-group > div,
@@ -40,7 +45,7 @@
 
       .form-group.column > div,
       .form-group.column > span:last-child {
-        margin-top: 0.35rem;
+        margin-top: 0.65rem;
       }
 
       .form-group.column > span:last-child {
@@ -153,12 +158,25 @@
         color: #50c878;
       }
 
+      .header {
+        height: 4rem;
+      }
+
+      .header > img {
+        display: inline-block;
+        max-height: 100%;
+      }
+
       body {
         padding: 3rem 2rem;
       }
     </style>
   </head>
   <body>
+    <div class="header" class="header">
+      <img src="https://res.cloudinary.com/thetechshrine/image/upload/v1686072262/survey/development/logo/logo-removebg-preview_vppuaw.png" alt="" />
+    </div>
+
     <div class="form-group header">
       <div>
         <div class="checkbox">

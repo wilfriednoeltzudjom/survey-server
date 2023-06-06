@@ -20,13 +20,14 @@
       }
 
       .form-group {
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
         page-break-inside: avoid;
       }
 
       .form-group > div,
       .form-group > span:last-child:not(:first-child) {
-        font-weight: 500;
+        font-weight: bold;
+        text-transform: uppercase;
       }
 
       .form-group.column {
@@ -40,7 +41,7 @@
 
       .form-group.column > div,
       .form-group.column > span:last-child {
-        margin-top: 0.35rem;
+        margin-top: 0.65rem;
       }
 
       .form-group .checkbox {
@@ -51,22 +52,22 @@
         margin-right: 1.5rem;
       }
 
-      .form-group.header {
+      .form-group.top {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
       }
 
-      .form-group.header > div {
+      .form-group.top > div {
         display: flex;
         font-size: 20px;
       }
 
-      .form-group.header > div:not(:last-child) {
+      .form-group.top > div:not(:last-child) {
         margin-right: 2rem;
       }
 
-      .form-group.header .checkbox > label > span:first-child {
+      .form-group.top .checkbox > label > span:first-child {
         width: 30px;
         height: 30px;
       }
@@ -149,30 +150,61 @@
         color: #50C878;
       }
 
+      .header {
+        height: 3.5rem;
+      }
+
+      .header > img {
+        display: inline-block;
+        max-height: 100%;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .footer > .numerotation {
+        display: flex;
+        justify-content: flex-end;
+        font-size: 1rem;
+        width: 100%;
+      }
+
+      .page-break {
+        page-break-before: always;
+        padding-bottom: 2rem;
+      }
+
       body {
-        padding: 3rem 2rem;
+        padding: 0rem 2rem;
       }
     </style>
   </head>
   <body>
-    <div class="form-group header">
+    <div id="header" class="header">
+      <img src="https://res.cloudinary.com/thetechshrine/image/upload/v1686072262/survey/development/logo/logo-removebg-preview_vppuaw.png" alt="" />
+    </div>
+
+    <div class="form-group top">
       <div>
         <div class="checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" {{#if operationTypeMPR}}checked{{/if}} />
           <label>
             <span></span>
             <span>MPR</span>
           </label>
         </div>
         <div class="checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" {{#if operationTypeRENO}}checked{{/if}} />
           <label>
             <span></span>
             <span>RENO</span>
           </label>
         </div>
         <div class="checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" {{#if operationTypeRAC}}checked{{/if}} />
           <label>
             <span></span>
             <span>RAC</span>
@@ -345,6 +377,8 @@
       </div>
     </div>
 
+    <div class="page-break"></div>
+
     <div class="form-group">
       <span>Numéro fiscal 1</span>
       <span>{{occupantOne.taxNoticeNumber}}</span>
@@ -506,6 +540,9 @@
         </div>
       </div>
     </div>
+
+    <div class="page-break"></div>
+
     <div class="form-group column question">
       <span>Si chauffage à gaz, est-ce une chaudière à condensation ?</span>
       <div>
@@ -667,9 +704,28 @@
       <span>{{phone}}</span>
     </div>
 
+    <div class="page-break"></div>
+
     <div class="form-group column">
-      <span>Commentaires</span>
+      <span>Commentaires sur les combles</span>
+      <span>{{loftComments}}</span>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="form-group column">
+      <span>Autres commentaires</span>
       <span>{{comments}}</span>
+    </div>
+
+    <div id="footer">
+      <div class="numerotation">
+          <div>
+            <span class="pageNumber"></span>
+            <span> / </span>
+            <span class="totalPages"></span>
+          </div>
+      </div>
     </div>
   </body>
 </html>

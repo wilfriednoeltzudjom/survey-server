@@ -15,7 +15,7 @@ const path = require('path');
  */
 async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSuccessCallback, onFailureCallback) {
   const { bodyTemplate } = templates;
-  const { deleteExportedFile } = options;
+  const { deleteExportedFile = true } = options;
   const exportedFilename = generateFilename();
 
   try {

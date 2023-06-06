@@ -11,6 +11,7 @@ const {
   WALL_INSULATION_TYPES,
   WATER_HEATING_TYPES,
   RADIATOR_TYPES,
+  OPERATION_TYPES,
 } = require('../enums');
 const occupantSchema = require('../schemas/occupant.schema');
 const schemaOptions = require('../_helpers/schemaOptions');
@@ -21,8 +22,8 @@ const { Schema } = mongoose;
 const surveySchema = new Schema(
   {
     reference: { type: String },
-    lastName: { type: String, required: true, set: capitalize },
-    firstName: { type: String, required: true, set: capitalize },
+    operationType: { type: String, enum: Object.values(OPERATION_TYPES) },
+    fullName: { type: String, required: true, set: capitalize },
     streetNumber: { type: String, required: true },
     streetName: { type: String, required: true },
     city: { type: String, required: true },
@@ -57,6 +58,7 @@ const surveySchema = new Schema(
     basementAreaForBoiler: { type: Boolean, default: false },
     phone: { type: String, default: '' },
     comments: { type: String, default: '' },
+    loftComments: { type: String, default: '' },
     radiatorType: { type: String, enum: Object.values(RADIATOR_TYPES) },
     fileId: { type: String },
     fileUrl: { type: String },

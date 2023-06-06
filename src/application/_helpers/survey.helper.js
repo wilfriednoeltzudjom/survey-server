@@ -10,6 +10,7 @@ const {
   WALL_INSULATION_TYPES,
   WATER_HEATING_TYPES,
   RADIATOR_TYPES,
+  OPERATION_TYPES,
 } = require('../../database/enums');
 const MESSAGES = require('../messages');
 
@@ -25,17 +26,12 @@ const { ResourceNotFoundError } = require('./errors');
 function formatSurveyForPDFGeneration(survey) {
   return {
     ...survey,
-    fullName: formatFullName(survey),
     department: formatDepartment(survey),
     fullAddress: formatFullAddress(survey),
     phone: formatPhoneNumber(survey),
     ...formatOccupants(survey),
     ...formatCheckboxesProperties(survey),
   };
-}
-
-function formatFullName({ lastName, firstName }) {
-  return `${lastName} ${firstName}`;
 }
 
 function formatDepartment({ postalCode }) {
@@ -83,6 +79,7 @@ function formatCheckboxesProperties({
   fireplaceIncluded,
   basementAreaForBoiler,
   radiatorType,
+  operationType,
 }) {
   const additionalProperties = {};
   if (loftIncluded) additionalProperties.loftNotInsulated = !loftInsulated;
@@ -131,6 +128,9 @@ function formatCheckboxesProperties({
     fireplaceNotIncluded: !fireplaceIncluded,
     radiatorTypeClassic: radiatorType === RADIATOR_TYPES.CLASSIC,
     radiatorTypeElectric: radiatorType === RADIATOR_TYPES.ELECTRIC,
+    operationTypeMPR: operationType === OPERATION_TYPES.MPR,
+    operationTypeRENO: operationType === OPERATION_TYPES.RENO,
+    operationTypeRAC: operationType === OPERATION_TYPES.RAC,
     ...additionalProperties,
   };
 }
