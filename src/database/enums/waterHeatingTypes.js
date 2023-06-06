@@ -1,0 +1,6 @@
+module.exports = Object.freeze({
+  DEFAULT_HEATING: 'DEFAULT_HEATING',
+  ELECTRICITY: 'ELECTRICITY',
+  BALLOON: 'BALLOON',
+  OTHER: 'OTHER',
+});

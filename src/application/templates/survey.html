@@ -1,0 +1,659 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Survey | Report</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Tahoma', 'Arial', 'Georama', sans-serif;
+        font-size: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 0.75rem;
+        page-break-inside: avoid;
+      }
+
+      .form-group > div,
+      .form-group > span:last-child:not(:first-child) {
+        font-weight: 500;
+      }
+
+      .form-group.column {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group:not(.question) > span:first-child::after {
+        content: ' : ';
+      }
+
+      .form-group.column > div,
+      .form-group.column > span:last-child {
+        margin-top: 0.35rem;
+      }
+
+      .form-group.column > span:last-child {
+        text-transform: uppercase;
+      }
+
+      .form-group .checkbox {
+        margin-bottom: 0.25rem;
+      }
+
+      .form-group .checkbox:not(:last-child) {
+        margin-right: 1.5rem;
+      }
+
+      .form-group.header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 3rem;
+      }
+
+      .form-group.header > div {
+        display: flex;
+        font-size: 20px;
+      }
+
+      .form-group.header > div:not(:last-child) {
+        margin-right: 2rem;
+      }
+
+      .form-group.header .checkbox > label > span:first-child {
+        width: 30px;
+        height: 30px;
+      }
+
+      .divider {
+        height: 1.5rem;
+      }
+
+      .checkbox {
+        display: inline-block;
+        position: relative;
+        align-items: center;
+      }
+
+      .checkbox input {
+        opacity: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .checkbox > label {
+        display: flex;
+        align-items: center;
+      }
+
+      .checkbox > label > span:first-child {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #000;
+        position: relative;
+        background: white;
+        transform: translateY(-1px);
+      }
+
+      .checkbox > label > span:first-child::after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 50%;
+        left: 50%;
+        transform: scale(0) translateY(-80%) translateX(-50%) rotate(-45deg);
+        width: 10px;
+        height: 4px;
+        border-color: #fff;
+        border-width: 0 0 2.2px 2.2px;
+        border-style: solid;
+      }
+
+      .checkbox > label > span:last-child {
+        display: inline-block;
+        margin-left: 0.5rem;
+      }
+
+      .checkbox input:checked + label > span:first-child::after {
+        content: '';
+        opacity: 1;
+        transform: scale(1) translateY(-75%) translateX(-52%) rotate(-45deg);
+        border-color: #000;
+      }
+
+      .color-red {
+        color: #ee4b2b;
+      }
+
+      .color-yellow {
+        color: #ffea00;
+      }
+
+      .color-blue {
+        color: #0000ff;
+      }
+
+      .color-purple {
+        color: #bf40bf;
+      }
+
+      .color-green {
+        color: #50c878;
+      }
+
+      body {
+        padding: 3rem 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-group header">
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>MPR</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>RENO</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>RAC</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <span>Nom(s) et prénom(s) du client</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Numéro fiscal 1</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Référence de l'avis 1</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Revenu fiscal de référence 1</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Date de naissance 1</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Nombre de personnes dans le foyer</span>
+      <span></span>
+    </div>
+    <div class="form-group">
+      <span>Département du bénéficiaire</span>
+      <span></span>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="important">Si le foyer se compose de plusieurs avis d'imposition</p>
+    <div class="form-group">
+      <span>Revenu fiscal de référence 2</span>
+      <span></span>
+    </div>
+
+    <div class="form-group column">
+      <span>Situation du ménage</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" checked />
+          <label>
+            <span></span>
+            <span>Précaire <span class="color-blue">(Bleu)</span></span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Modeste <span class="color-yellow">(Jaune)</span></span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Classique <span class="color-purple">(Violet)</span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <span>Surface de la maison</span>
+      <span>m²</span>
+    </div>
+    <div class="form-group column question">
+      <span>Est-ce qu'il y'a des combles ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column">
+      <span>Type de combles</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Perdus accéssibles</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Perdus inaccéssibles</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Aménagés</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Aménageable</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <span>Surface des combles</span>
+      <span>m²</span>
+    </div>
+    <div class="form-group column question">
+      <span>Les combles sont déjà isolés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column question">
+      <span>Si les combles sont déjà isolés, depuis combien de temps ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>+10 ans</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>-10 ans</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est ce que le client a déjà bénéficié des aides MaPrimeRenov ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Est ce que le client a déjà bénéficié de l'isolation à 1 euro ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column">
+      <span>Type de chauffage</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Bois</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Gaz</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Fioul</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Pompe à chaleur</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Electricité</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Si chauffage à gaz, est-ce une chaudière à condensation ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column question">
+      <span>Année de construction de la maison</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>+15 ans</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>-15 ans</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column">
+      <span>Type de client</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Propriétaire occupant</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Locataire</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>SCI avec 51% des parts</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column">
+      <span>Isolation des murs extérieurs</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>ITI</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>ITE</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Aucune</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column">
+      <span>Moyen de production d'eau chaude sanitaire</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Lié au chauffage</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Electricité</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Ballon thermodynamique</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est-ce que la maison a des mitoyennetés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <span>Nombre de mitoyennetés</span>
+      <span></span>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est-ce qu'il y a un sous-sol ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Si sous-sol chauffé, est ce que le plancher bas est isolé ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>+10 ans</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>-10 ans</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="form-group">
+      <span>Nombre de radiateurs</span>
+      <span></span>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est-ce que la maison dispose d'une cheminée ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="form-group">
+      <span>Numéro de portable</span>
+      <span></span>
+    </div>
+
+    <div class="form-group column">
+      <span>Commentaires</span>
+      <span></span>
+    </div>
+  </body>
+</html>

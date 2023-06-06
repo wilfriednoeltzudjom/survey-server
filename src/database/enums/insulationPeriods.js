@@ -1,0 +1,4 @@
+module.exports = Object.freeze({
+  MORE_THAN_TEN_YEARS: 'MORE_THAN_TEN_YEARS',
+  LESS_THAN_TEN_YEARS: 'LESS_THAN_TEN_YEARS',
+});
