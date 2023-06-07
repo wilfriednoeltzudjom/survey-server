@@ -8,7 +8,7 @@ module.exports = function buildGetSurveys() {
       query.createdBy = user.id;
     }
 
-    return Survey.find(query);
+    return Survey.find(query).sort({ createdAt: -1 }).populate('createdBy');
   }
 
   return { execute };

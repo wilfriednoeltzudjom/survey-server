@@ -23,7 +23,7 @@ module.exports = function buildSurveyController(dependencies) {
   async function getSurveys(request) {
     const surveys = await getSurveysUseCase.execute({ user: request.user });
 
-    return HttpResponse.created({
+    return HttpResponse.succeeded({
       data: surveys,
     });
   }
@@ -31,7 +31,7 @@ module.exports = function buildSurveyController(dependencies) {
   async function getSurvey(request) {
     const survey = await getSurveyUseCase.execute(request.params);
 
-    return HttpResponse.created({
+    return HttpResponse.succeeded({
       data: survey,
     });
   }
@@ -39,7 +39,7 @@ module.exports = function buildSurveyController(dependencies) {
   async function deleteSurvey(request) {
     const survey = await deleteSurveyUseCase.execute(request.params, { user: request.user });
 
-    return HttpResponse.created({
+    return HttpResponse.succeeded({
       message: MESSAGES.SURVEY_DELETED(survey),
       data: survey,
     });

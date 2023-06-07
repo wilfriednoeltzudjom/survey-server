@@ -2,6 +2,8 @@ const buildSignUpUseCase = require('../use_cases/accounts/signUp.usecase');
 const buildSignInUseCase = require('../use_cases/accounts/signIn.usecase');
 const buildGetAccountsUseCase = require('../use_cases/accounts/getAccounts.usecase');
 const buildGetProfileUseCase = require('../use_cases/accounts/getProfile.usecase');
+const buildCreateAccountUseCase = require('../use_cases/accounts/createAccount.usecase');
+const buildDeleteAccountUseCase = require('../use_cases/accounts/deleteAccount.usecase');
 const { HttpResponse } = require('../application/payloads');
 const MESSAGES = require('../application/messages');
 
@@ -10,6 +12,8 @@ module.exports = function buildAuthController(dependencies) {
   const signInUseCase = buildSignInUseCase(dependencies);
   const getAccountsUseCase = buildGetAccountsUseCase(dependencies);
   const getProfileUseCase = buildGetProfileUseCase(dependencies);
+  const createAccountUseCase = buildCreateAccountUseCase(dependencies);
+  const deleteAccountUseCase = buildDeleteAccountUseCase(dependencies);
 
   async function signUp(request) {
     const response = await signUpUseCase.execute(request.body);
@@ -30,18 +34,36 @@ module.exports = function buildAuthController(dependencies) {
   }
 
   async function getAccounts() {
-    const response = await getAccountsUseCase.execute();
+    const accounts = await getAccountsUseCase.execute();
 
     return HttpResponse.succeeded({
-      data: response,
+      data: accounts,
     });
   }
 
   async function getProfile(request) {
-    const response = await getProfileUseCase.execute({ user: request.user });
+    const profile = await getProfileUseCase.execute({ user: request.user });
 
     return HttpResponse.succeeded({
-      data: response,
+      data: profile,
+    });
+  }
+
+  async function createAccount(request) {
+    const account = await createAccountUseCase.execute(request.body, { user: request.user });
+
+    return HttpResponse.created({
+      message: MESSAGES.ACCOUNT_CREATED,
+      data: account,
+    });
+  }
+
+  async function deleteAccount(request) {
+    const account = await deleteAccountUseCase.execute(request.params, { user: request.user });
+
+    return HttpResponse.succeeded({
+      message: MESSAGES.ACCOUNT_DELETED(account),
+      data: account,
     });
   }
 
@@ -51,5 +73,5 @@ module.exports = function buildAuthController(dependencies) {
     });
   }
 
-  return { signIn, signUp, getAccounts, getProfile, signOut };
+  return { signIn, signUp, getAccounts, getProfile, signOut, createAccount, deleteAccount };
 };

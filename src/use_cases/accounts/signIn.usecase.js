@@ -14,7 +14,7 @@ module.exports = function buildSignUp(dependencies) {
   }
 
   async function findAccountByEmail(email) {
-    const account = Account.findOne({ email: toLowerCase(email) });
+    const account = await Account.findOne({ email: toLowerCase(email), deleted: false });
     if (isNullishOrEmpty(account)) throw new ResourceNotFoundError(MESSAGES.ACCOUNT_NOT_FOUND({ email }));
 
     return account;

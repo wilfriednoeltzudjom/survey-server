@@ -10,6 +10,7 @@ const WATER_HEATING_TYPES = require('./waterHeatingTypes');
 const ROLES = require('./roles');
 const RADIATOR_TYPES = require('./radiatorTypes');
 const OPERATION_TYPES = require('./operationTypes');
+const ACCOUNT_STATUSES = require('./accountStatuses');
 
 module.exports = {
   BUILDING_AGES,
@@ -24,4 +25,5 @@ module.exports = {
   ROLES,
   RADIATOR_TYPES,
   OPERATION_TYPES,
+  ACCOUNT_STATUSES,
 };

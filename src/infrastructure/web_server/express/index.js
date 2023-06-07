@@ -5,10 +5,13 @@ const cookieParser = require('cookie-parser');
 const loggingMiddleware = require('./middlewares/logging.middleware');
 const authMiddleware = require('./middlewares/auth.middleware');
 const errorMiddleware = require('./middlewares/error.middleware');
+const accessRightsMiddleware = require('./middlewares/accessRights.middleware');
 const authRoutes = require('./routes/auth.routes');
 const accountsRoutes = require('./routes/accounts.routes');
 const surveysRoutes = require('./routes/surveys.routes');
+
 const { isValidValue } = require('../../../application/_helpers/dataValidator.helper');
+const { ROLES } = require('../../../database/enums');
 
 const app = express();
 
@@ -20,7 +23,7 @@ function start(port) {
   app.use(cookieParser());
 
   app.use('/v1/auth', authRoutes);
-  app.use('/v1/accounts', authMiddleware, accountsRoutes);
+  app.use('/v1/accounts', authMiddleware, accessRightsMiddleware(ROLES.ADMINISTRATOR), accountsRoutes);
   app.use('/v1/surveys', authMiddleware, surveysRoutes);
 
   app.use(errorMiddleware);
