@@ -17,8 +17,10 @@ module.exports = function buildCreateSurvey(dependencies) {
     await setSurveyReference(survey);
     setEnergyRenovationPremiumsSituations(survey);
     await generateSurveyPDF(survey);
+    await survey.save();
+    await survey.populate('createdBy');
 
-    return survey.save();
+    return survey;
   }
 
   async function ensureTaxNoticeIsValid({ occupants: [occupant = {}] = [] }) {

@@ -25,4 +25,5 @@ module.exports = {
   ACCOUNT_DELETED(account) {
     return `Le compte ${account.email} a bien été supprimé`;
   },
+  ACCOUNT_NON_DELETABLE_EXISTING_SURVEYS: 'Ce compte est lié à un ou plusieurs formulaires et ne peut pas être supprimé.',
 };

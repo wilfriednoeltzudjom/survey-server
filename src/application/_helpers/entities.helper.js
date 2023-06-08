@@ -3,7 +3,7 @@ function getSafeDeleteParams(user = {}) {
 }
 
 function assignSafeDeleteParams(object, user = {}) {
-  return Object.assign(object, user);
+  return Object.assign(object, getSafeDeleteParams(user));
 }
 
 module.exports = { getSafeDeleteParams, assignSafeDeleteParams };
