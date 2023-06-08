@@ -14,7 +14,7 @@ module.exports = function buildDeleteAccount() {
   }
 
   async function ensureAccountIsDeletable(account) {
-    const surveysCount = await Survey({ deleted: false, createdBy: account.id });
+    const surveysCount = await Survey.countDocuments({ deleted: false, createdBy: account.id });
     if (surveysCount > 0) throw new BadRequestError(MESSAGES.ACCOUNT_NON_DELETABLE_EXISTING_SURVEYS);
   }
 
