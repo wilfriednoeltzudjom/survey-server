@@ -17,9 +17,9 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
   const { bodyTemplate } = templates;
   const { deleteExportedFile = true } = options;
   const exportedFilename = generateFilename();
-  const options = {};
+  const addtionalOptions = {};
   if (process.env.NODE_ENV !== 'development') {
-    options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/app/.apt/usr/bin/google-chrome';
+    addtionalOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/app/.apt/usr/bin/google-chrome';
   }
 
   try {
@@ -27,7 +27,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
       headless: true,
       args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox'],
       ignoreHTTPSErrors: true,
-      ...options,
+      ...addtionalOptions,
     });
     const page = await browser.newPage();
     await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
