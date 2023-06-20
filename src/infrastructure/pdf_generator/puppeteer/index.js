@@ -21,7 +21,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
   try {
     const browser = await puppeteer.launch({
       headless: 'new',
-      args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox'],
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
     await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
