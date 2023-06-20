@@ -46,8 +46,8 @@
     "moment": "^2.29.4",
     "mongoose": "^7.2.1",
     "morgan": "^1.10.0",
-    "puppeteer": "^5.5.0",
-    "puppeteer-report": "^3.0.1",
+    "puppeteer": "^20.7.2",
+    "puppeteer-report": "^3.1.0",
     "stacktracey": "^2.1.8",
     "uuid": "^9.0.0",
     "winston": "^3.9.0"
