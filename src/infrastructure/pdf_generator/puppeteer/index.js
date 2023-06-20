@@ -24,7 +24,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
       args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
-    await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2' });
+    await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: ['networkidle2', 'domcontentloaded'] });
     await page.setContent(bodyTemplate);
     await page.emulateMediaType('screen');
 
