@@ -19,7 +19,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
   const exportedFilename = generateFilename();
   const options = {};
   if (process.env.NODE_ENV !== 'development') {
-    options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+    options.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/app/.apt/usr/bin/google-chrome';
   }
 
   try {
