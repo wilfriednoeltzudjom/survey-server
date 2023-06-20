@@ -41,6 +41,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
       },
     };
     await report.pdfPage(page, options);
+    await browser.close();
 
     if (onSuccessCallback) await onSuccessCallback(exportedFilename);
   } catch (error) {
