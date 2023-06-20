@@ -39,7 +39,7 @@ module.exports = function buildCreateSurvey(dependencies) {
   }
 
   async function setSurveyReference(survey) {
-    const surveysCount = await Survey.countDocuments({ deleted: false });
+    const surveysCount = await Survey.countDocuments();
     survey.reference = 'DOC-POEYA-'.concat(String(surveysCount + 1).padStart(5, '0'));
   }
 
