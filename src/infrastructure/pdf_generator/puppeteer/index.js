@@ -4,8 +4,6 @@ const fs = require('fs-extra');
 const report = require('puppeteer-report');
 const path = require('path');
 
-const logger = require('../../logger');
-
 /**
  * Generate pdf file file from html content
  * @param {Object} templates
@@ -19,19 +17,11 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
   const { bodyTemplate } = templates;
   const { deleteExportedFile = true } = options;
   const exportedFilename = generateFilename();
-  const addtionalOptions = {};
-
-  if (process.env.NODE_ENV === 'production') {
-    addtionalOptions.executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/app/.apt/usr/bin/google-chrome';
-  }
-  logger.info(JSON.stringify(addtionalOptions));
 
   try {
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: 'new',
       args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox'],
-      ignoreHTTPSErrors: true,
-      ...addtionalOptions,
     });
     const page = await browser.newPage();
     await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
