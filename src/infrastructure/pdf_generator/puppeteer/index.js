@@ -20,11 +20,12 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
 
   try {
     const browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: ['--disable-dev-shm-usage', '--no-sandbox', '--disable-setuid-sandbox'],
+      ignoreHTTPSErrors: true,
     });
     const page = await browser.newPage();
-    await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: ['networkidle2', 'domcontentloaded'] });
+    await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
     await page.setContent(bodyTemplate);
     await page.emulateMediaType('screen');
 
