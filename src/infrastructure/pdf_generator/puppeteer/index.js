@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const uuid = require('uuid');
 const fs = require('fs-extra');
 const report = require('puppeteer-report');
@@ -22,6 +22,7 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
     const browser = await puppeteer.launch({
       headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: '/app/.apt/usr/bin/google-chrome',
     });
     const page = await browser.newPage();
     await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
