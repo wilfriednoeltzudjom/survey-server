@@ -26,6 +26,13 @@ router.get('/:surveyId', (req, res, next) => {
     .catch(next);
 });
 
+router.put('/:surveyId/generate', (req, res, next) => {
+  surveyController
+    .generateSurveyReport(HttpRequest.fromExpress(req))
+    .then((response) => res.status(response.status).json(response.toJSON()))
+    .catch(next);
+});
+
 router.delete('/:surveyId', (req, res, next) => {
   surveyController
     .deleteSurvey(HttpRequest.fromExpress(req))

@@ -2,6 +2,7 @@ const buildCreateSurveyUseCase = require('../use_cases/surveys/createSurvey.usec
 const buildGetSurveysUseCase = require('../use_cases/surveys/getSurveys.usecase');
 const buildGetSurveyUseCase = require('../use_cases/surveys/getSurvey.usecase');
 const buildDeleteSurveyUseCase = require('../use_cases/surveys/deleteSurvey.usecase');
+const buildGenerateSurveyReportUseCase = require('../use_cases/surveys/generateSurveyReport.usecase');
 const { HttpResponse } = require('../application/payloads');
 const MESSAGES = require('../application/messages');
 
@@ -10,6 +11,7 @@ module.exports = function buildSurveyController(dependencies) {
   const getSurveysUseCase = buildGetSurveysUseCase(dependencies);
   const getSurveyUseCase = buildGetSurveyUseCase(dependencies);
   const deleteSurveyUseCase = buildDeleteSurveyUseCase(dependencies);
+  const generateSurveyReportUseCase = buildGenerateSurveyReportUseCase(dependencies);
 
   async function createSurvey(request) {
     const survey = await createSurveyUseCase.execute(request.body, { user: request.user });
@@ -45,5 +47,14 @@ module.exports = function buildSurveyController(dependencies) {
     });
   }
 
-  return { createSurvey, getSurveys, getSurvey, deleteSurvey };
+  async function generateSurveyReport(request) {
+    const survey = await generateSurveyReportUseCase.execute(request.params);
+
+    return HttpResponse.succeeded({
+      message: MESSAGES.SURVEY_GENERATED(survey),
+      data: survey,
+    });
+  }
+
+  return { createSurvey, getSurveys, getSurvey, deleteSurvey, generateSurveyReport };
 };

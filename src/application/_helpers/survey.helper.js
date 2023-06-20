@@ -17,6 +17,11 @@ const MESSAGES = require('../messages');
 const { formatDate } = require('../../infrastructure/date_utilities/moment');
 const { isNullishOrEmpty, isNotEmptyString, removeNullishInString } = require('./dataValidator.helper');
 const { ResourceNotFoundError } = require('./errors');
+const { createFileObjectFromPath } = require('./file.helper');
+const htmlCompiler = require('../../infrastructure/html_compiler');
+const fileManager = require('../../infrastructure/file_manager');
+const pdfGenerator = require('../../infrastructure/pdf_generator');
+const logger = require('../../infrastructure/logger');
 
 /**
  * Format survey for pdf generation
@@ -141,10 +146,29 @@ function formatCheckboxesProperties({
  * @returns
  */
 async function findSurveyById(surveyId) {
-  const survey = await Survey.findById({ _id: surveyId, deleted: false });
+  const survey = await Survey.findById({ _id: surveyId, deleted: false }).populate('createdBy');
   if (isNullishOrEmpty(survey)) throw new ResourceNotFoundError(MESSAGES.SURVEY_NOT_FOUND({ surveyId }));
 
   return survey;
 }
 
-module.exports = { formatSurveyForPDFGeneration, findSurveyById };
+/**
+ * Generate survey pdf
+ * @param {Object} survey
+ */
+async function generateSurveyPDF(survey) {
+  const bodyTemplate = await htmlCompiler.compile('survey', formatSurveyForPDFGeneration(survey.toJSON()));
+  await pdfGenerator.generatePDFFromHTMLTemplate(
+    { bodyTemplate },
+    {},
+    async function (filepath) {
+      const uploadResponse = await fileManager.uploadFile({ file: createFileObjectFromPath(filepath) });
+      Object.assign(survey, uploadResponse);
+    },
+    function (error) {
+      if (error) logger.error(MESSAGES.SURVEY_PDF_GENERATION_ERROR(survey, error));
+    }
+  );
+}
+
+module.exports = { formatSurveyForPDFGeneration, findSurveyById, generateSurveyPDF };

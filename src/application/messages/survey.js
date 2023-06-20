@@ -10,6 +10,9 @@ module.exports = {
   SURVEY_DELETED(survey) {
     return `Le formulaire ${survey.reference} a bien été supprimé`;
   },
+  SURVEY_GENERATED(survey) {
+    return `Le formulaire ${survey.reference} a bien été régénéré`;
+  },
   SURVEY_ALREADY_EXISTS({ taxNoticeNumber, taxNoticeReference }) {
     return `Un formulaire a déjà été créé avec le numéro fiscal ${taxNoticeNumber} et la référence ${taxNoticeReference} `;
   },

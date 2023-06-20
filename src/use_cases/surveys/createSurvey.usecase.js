@@ -2,12 +2,11 @@ const { Survey } = require('../../database/models');
 const MESSAGES = require('../../application/messages');
 const { BadRequestError } = require('../../application/_helpers/errors');
 const { getEnergyRenovationPremiumsSituations } = require('../../application/_helpers/energyRenovationPremiumEligibility.helper');
-const { createFileObjectFromPath } = require('../../application/_helpers/file.helper');
 const surveyHelper = require('../../application/_helpers/survey.helper');
 const { removeNullishInObject } = require('../../application/_helpers/dataValidator.helper');
 
 module.exports = function buildCreateSurvey(dependencies) {
-  const { fileManager, fiscalInformationUtilities, htmlCompiler, pdfGenerator, logger } = dependencies;
+  const { fiscalInformationUtilities } = dependencies;
 
   async function execute(surveyData = {}, { user } = {}) {
     const survey = new Survey(removeNullishInObject({ ...surveyData, createdBy: user.id }));
@@ -16,7 +15,7 @@ module.exports = function buildCreateSurvey(dependencies) {
     await ensureSurveyDoesNotExist(survey);
     await setSurveyReference(survey);
     setEnergyRenovationPremiumsSituations(survey);
-    await generateSurveyPDF(survey);
+    await surveyHelper.generateSurveyPDF(survey);
     await survey.save();
     await survey.populate('createdBy');
 
@@ -50,21 +49,6 @@ module.exports = function buildCreateSurvey(dependencies) {
       return total + occupant.referenceTaxIncome;
     }, 0);
     Object.assign(survey, getEnergyRenovationPremiumsSituations({ postalCode, referenceTaxIncome, numberOfDependents }));
-  }
-
-  async function generateSurveyPDF(survey) {
-    const bodyTemplate = await htmlCompiler.compile('survey', surveyHelper.formatSurveyForPDFGeneration(survey.toJSON()));
-    await pdfGenerator.generatePDFFromHTMLTemplate(
-      { bodyTemplate },
-      {},
-      async function (filepath) {
-        const uploadResponse = await fileManager.uploadFile({ file: createFileObjectFromPath(filepath) });
-        Object.assign(survey, uploadResponse);
-      },
-      function (error) {
-        if (error) logger.error(MESSAGES.SURVEY_PDF_GENERATION_ERROR(survey, error));
-      }
-    );
   }
 
   return { execute };
