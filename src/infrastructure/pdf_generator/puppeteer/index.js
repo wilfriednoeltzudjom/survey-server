@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer-core');
+let puppeteer = require('puppeteer-core');
 const uuid = require('uuid');
 const fs = require('fs-extra');
 const report = require('puppeteer-report');
@@ -18,12 +18,16 @@ async function generatePDFFromHTMLTemplate(templates = {}, options = {}, onSucce
   const { deleteExportedFile = true } = options;
   const exportedFilename = generateFilename();
 
+  const puppeteerOptions = { headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox'] };
+  if (process.env.NODE_ENV === 'production') {
+    puppeteerOptions.executablePath = process.env.CHROME_EXECUTABLE_PATH;
+  }
+  if (process.env.NODE_ENV === 'development') {
+    puppeteer = require('puppeteer');
+  }
+
   try {
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath: '/app/.apt/usr/bin/google-chrome',
-    });
+    const browser = await puppeteer.launch(puppeteerOptions);
     const page = await browser.newPage();
     await page.goto('data:text/html,'.concat(bodyTemplate), { waitUntil: 'networkidle2', timeout: 0 });
     await page.setContent(bodyTemplate);
