@@ -12,6 +12,7 @@ const {
   WATER_HEATING_TYPES,
   RADIATOR_TYPES,
   OPERATION_TYPES,
+  INSULATION_TYPES,
 } = require('../enums');
 const occupantSchema = require('../schemas/occupant.schema');
 const schemaOptions = require('../_helpers/schemaOptions');
@@ -34,6 +35,7 @@ const surveySchema = new Schema(
     householdSituation: { type: String, enum: Object.values(HOUSEHOLD_SITUATIONS) },
     mprProfile: { type: String, enum: Object.values(MPR_PROFILES) },
     livingSpaceArea: { type: Number, required: true },
+    insulationType: { type: String, enum: Object.values(INSULATION_TYPES) },
     loftIncluded: { type: Boolean, default: false, required: true },
     loftType: { type: String, enum: Object.values(LOFT_TYPES) },
     loftArea: { type: Number },
@@ -52,13 +54,17 @@ const surveySchema = new Schema(
     jointOwnersCount: { type: Number, default: 0 },
     basementIncluded: { type: Boolean, default: false },
     basementHeated: { type: Boolean, default: false },
+    basementInsulated: { type: Boolean, default: false },
     lowFloorInsulationPeriod: { type: String, enum: Object.values(INSULATION_PERIODS) },
     radiatorsCount: { type: Number, default: 0 },
     fireplaceIncluded: { type: Boolean, default: false },
     basementAreaForBoiler: { type: Boolean, default: false },
+    heatingTypeComments: { type: String },
+    waterHeatingComments: { type: String },
     phone: { type: String, default: '' },
     comments: { type: String, default: '' },
     loftComments: { type: String, default: '' },
+    email: { type: String },
     radiatorType: { type: String, enum: Object.values(RADIATOR_TYPES) },
     fileId: { type: String },
     fileUrl: { type: String },

@@ -1,11 +1,13 @@
 const { Survey } = require('../../database/models');
 const MESSAGES = require('../../application/messages');
 const { BadRequestError } = require('../../application/_helpers/errors');
-const { getEnergyRenovationPremiumsSituations } = require('../../application/_helpers/energyRenovationPremiumEligibility.helper');
+const energyRenovationPremiumEligibilityHelper = require('../../application/_helpers/energyRenovationPremiumEligibility.helper');
 const surveyHelper = require('../../application/_helpers/survey.helper');
-const { removeNullishInObject } = require('../../application/_helpers/dataValidator.helper');
+const { removeNullishInObject, isNonEmptyObject, isNonEmptyString } = require('../../application/_helpers/dataValidator.helper');
 
 module.exports = function buildCreateSurvey(dependencies) {
+  const SURVEY_REFERENCE_PREFIX = 'DOC-POEYA-';
+
   const { fiscalInformationUtilities } = dependencies;
 
   async function execute(surveyData = {}, { user } = {}) {
@@ -16,6 +18,7 @@ module.exports = function buildCreateSurvey(dependencies) {
     await setSurveyReference(survey);
     setEnergyRenovationPremiumsSituations(survey);
     await surveyHelper.generateSurveyPDF(survey);
+    await ensureSurveyReferenceIsUnique(survey);
     await survey.save();
     await survey.populate('createdBy');
 
@@ -40,7 +43,11 @@ module.exports = function buildCreateSurvey(dependencies) {
 
   async function setSurveyReference(survey) {
     const surveysCount = await Survey.countDocuments();
-    survey.reference = 'DOC-POEYA-'.concat(String(surveysCount + 1).padStart(5, '0'));
+    survey.reference = formatSurveyReference(surveysCount + 1);
+  }
+
+  function formatSurveyReference(referenceDigits) {
+    return SURVEY_REFERENCE_PREFIX.concat(String(referenceDigits).padStart(5, '0'));
   }
 
   function setEnergyRenovationPremiumsSituations(survey) {
@@ -48,7 +55,18 @@ module.exports = function buildCreateSurvey(dependencies) {
     const referenceTaxIncome = occupants.reduce((total, occupant) => {
       return total + occupant.referenceTaxIncome;
     }, 0);
-    Object.assign(survey, getEnergyRenovationPremiumsSituations({ postalCode, referenceTaxIncome, numberOfDependents }));
+    Object.assign(
+      survey,
+      energyRenovationPremiumEligibilityHelper.getEnergyRenovationPremiumsSituations({ postalCode, referenceTaxIncome, numberOfDependents })
+    );
+  }
+
+  async function ensureSurveyReferenceIsUnique(survey) {
+    const duplicateSurvey = await Survey.findOne({ reference: survey.reference });
+    if (isNonEmptyObject(duplicateSurvey) && isNonEmptyString(duplicateSurvey.reference)) {
+      const referenceDigits = Number(duplicateSurvey.reference.split(SURVEY_REFERENCE_PREFIX)[1]);
+      survey.reference = formatSurveyReference(referenceDigits + 1);
+    }
   }
 
   return { execute };

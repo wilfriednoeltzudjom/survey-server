@@ -19,6 +19,11 @@
         font-size: 1rem;
       }
 
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
       .form-group {
         margin-bottom: 1rem;
         page-break-inside: avoid;
@@ -150,6 +155,14 @@
         color: #50C878;
       }
 
+      .color-gold {
+        color: #ffd700;
+      }
+
+      .color-silver {
+        color: #c0c0c0;
+      }
+
       .header {
         height: 3.5rem;
       }
@@ -213,6 +226,8 @@
       </div>
     </div>
 
+    <h1 class="section-title">INFOS CLIENT</h1>
+
     <div class="form-group">
       <span>Nom(s) et prénom(s) du client</span>
       <span>{{fullName}}</span>
@@ -237,107 +252,36 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <span>Surface de la maison</span>
-      <span>{{livingSpaceArea}} m²</span>
-    </div>
-
     <div class="form-group column question">
-      <span>Est-ce qu'il y'a des combles ?</span>
+      <span>Est-ce que le client est ?</span>
       <div>
         <div class="checkbox">
-          <input type="checkbox" {{#if loftIncluded}}checked{{/if}} />
+          <input type="checkbox" {{#if owningTypeOwnerOccupant}}checked{{/if}} />
           <label>
             <span></span>
-            <span class="color-green">Oui</span>
+            <span class="color-green">Propriétaire occupant</span>
           </label>
         </div>
         <div class="checkbox">
-          <input type="checkbox" {{#if loftNotIncluded}}checked{{/if}}/>
+          <input type="checkbox" {{#if owningTypeOwnerTenant}}checked{{/if}} />
           <label>
             <span></span>
-            <span class="color-red">Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group column">
-      <span>Type de combles</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftTypeLostAccessible}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Perdus accéssibles</span>
+            <span>Locataire</span>
           </label>
         </div>
         <div class="checkbox">
-          <input type="checkbox" {{#if loftTypeLostInaccessible}}checked{{/if}} />
+          <input type="checkbox" {{#if owningTypeOwnerSCI}}checked{{/if}} />
           <label>
             <span></span>
-            <span class="color-red">Perdus inaccéssibles</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftTypeFurnished}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">Aménagés</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftTypeConvertible}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Aménageable</span>
+            <span>SCI avec 51% des parts</span>
           </label>
         </div>
       </div>
     </div>
     <div class="form-group">
-      <span>Surface des combles</span>
-      {{#if loftArea}}<span>{{loftArea}} m²</span>{{/if}}
+      <span>Surface de la maison</span>
+      <span>{{livingSpaceArea}} m²</span>
     </div>
-    <div class="form-group column question">
-      <span>Les combles sont déjà isolés ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftInsulated}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Oui</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftNotInsulated}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column question">
-      <span>Si les combles sont déjà isolés, depuis combien de temps ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftInsulationPeriodMoreThanTenYears}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">+10 ans</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if loftInsulationPeriodLessThanTenYears}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">-10 ans</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
     <div class="form-group column question">
       <span>Est ce que le client a déjà bénéficié des aides MaPrimeRenov ?</span>
       <div>
@@ -378,6 +322,351 @@
     </div>
 
     <div class="page-break"></div>
+  
+    <h1 class="section-title">ISOLATION</h1>
+
+    <div class="form-group column question">
+      <span>Quel point d'isolation ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if insulationTypeLoft}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Combles</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if insulationTypeBasement}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Sous-sol / Vide sanitaire</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if insulationTypeWall}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Mur</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Est-ce qu'il y'a des combles ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftIncluded}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftNotIncluded}}checked{{/if}}/>
+          <label>
+            <span></span>
+            <span class="color-red">Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <span>Surface des combles</span>
+      {{#if loftArea}}<span>{{loftArea}} m²</span>{{/if}}
+    </div>
+    <div class="form-group column">
+      <span>Type de combles</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftTypeLostAccessible}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Perdus accéssibles</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftTypeLostInaccessible}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Perdus inaccéssibles</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftTypeFurnished}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Aménagés</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftTypeConvertible}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Aménageable</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Les combles sont déjà isolés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftInsulated}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftNotInsulated}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Si les combles sont déjà isolés, depuis combien de temps ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftInsulationPeriodMoreThanTenYears}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">+10 ans</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if loftInsulationPeriodLessThanTenYears}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">-10 ans</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column">
+      <span>Commentaires sur les combles</span>
+      <span>{{loftComments}}</span>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est-ce que les mûrs extérieurs sont isolés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if wallInsulationTypeITI}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">ITI</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if wallInsulationTypeITE}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">ITE</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if wallInsulationTypeNone}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Aucune</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group column question">
+      <span>Est-ce qu'il y a un sous-sol ou un vide sanitaire ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if basementIncluded}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if basementNotIncluded}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Les sous-sols ou vide sanitaire sont-ils déjà isolés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if basementInsulated}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if basementNotInsulated}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Si oui, est ce que le plancher bas est isolé ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if lowFloorInsulationPeriodMoreThanTenYears}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">+10 ans</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if lowFloorInsulationPeriodLessThanTenYears}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">-10 ans</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h1 class="section-title">CHAUFFAGE</h1>
+
+    <div class="form-group column">
+      <span>Quel est le moyen de chauffage utilisé ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if heatingTypeWood}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-gold">Bois</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if heatingTypeGas}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-silver">Gaz</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if heatingTypeOil}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Fioul</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if heatingTypeHeatingPump}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Pompe à chaleur</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if heatingTypeElectricity}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Electricité</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column question">
+      <span>Si chauffage à gaz, est-ce une chaudière à condensation ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if oilHeatingTypeBoiler}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if notOilHeatingTypeBoiler}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <span>Année de la chaudière</span>
+      {{#if boilerReleaseYear}}<span>{{boilerReleaseYear}}</span>{{/if}}
+    </div>
+    <div class="form-group column">
+      <span>Commentaires sur le système de chauffage</span>
+      {{#if heatingTypeComments}}<span>{{heatingTypeComments}}</span>{{/if}}
+    </div>
+
+    <div class="form-group column">
+      <span>Moyen de production d'eau chaude sanitaire</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if waterHeatingTypeDefaultHeating}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Lié au chauffage</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if waterHeatingTypeElectricity}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Electricité</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if waterHeatingTypeBallon}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span>Ballon thermodynamique</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if waterHeatingTypeOther}}checked{{/if}} />
+          <label>
+            <span>{{waterHeatingTypeSpecified}}</span>
+            <span></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group column">
+      <span>Commentaires sur la production d'eau chaude sanitaire</span>
+      {{#if waterHeatingComments}}<span>{{waterHeatingComments}}</span>{{/if}}
+    </div>
+    <div class="form-group column question">
+      <span>Disposez-vous d'un espace de 1.9m de hauteur et 2m² pour une chaudière a granulés ?</span>
+      <div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if basementAreaForBoiler}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-green">Oui</span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" {{#if nonBasementAreaForBoiler}}checked{{/if}} />
+          <label>
+            <span></span>
+            <span class="color-red">Non</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h1 class="section-title">FISCALIÉ</h1>
 
     <div class="form-group">
       <span>Numéro fiscal 1</span>
@@ -418,6 +707,14 @@
       <span>Adresse</span>
       <span>{{fullAddress}}</span>
     </div>
+    <div class="form-group">
+      <span>Numéro de portable</span>
+      <span>{{phone}}</span>
+    </div>
+    <div class="form-group">
+      <span>Adresse email</span>
+      {{#if email}}<span>{{email}}</span>{{/if}}
+    </div>
 
     <div class="form-group column">
       <span>Est-ce que le client est</span>
@@ -444,278 +741,6 @@
           </label>
         </div>
       </div>
-    </div>
-
-    <div class="form-group column question">
-      <span>Est-ce que le client est ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if owningTypeOwnerOccupant}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Propriétaire occupant</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if owningTypeOwnerTenant}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Locataire</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if owningTypeOwnerSCI}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>SCI avec 51% des parts</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column question">
-      <span>Est-ce que les mûrs extérieurs sont isolés ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if wallInsulationTypeITI}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">ITI</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if wallInsulationTypeITE}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">ITE</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if wallInsulationTypeNone}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Aucune</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column">
-      <span>Quel est le moyen de chauffage utilisé ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if heatingTypeWood}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Bois</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if heatingTypeGas}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Gaz</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if heatingTypeOil}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Fioul</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if heatingTypeHeatingPump}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">Pompe à chaleur</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if heatingTypeElectricity}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">Electricité</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="page-break"></div>
-
-    <div class="form-group column question">
-      <span>Si chauffage à gaz, est-ce une chaudière à condensation ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if oilHeatingTypeBoiler}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">Oui</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if notOilHeatingTypeBoiler}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column">
-      <span>Moyen de production d'eau chaude sanitaire</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if waterHeatingTypeDefaultHeating}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Lié au chauffage</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if waterHeatingTypeElectricity}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Electricité</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if waterHeatingTypeBallon}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Ballon thermodynamique</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if waterHeatingTypeOther}}checked{{/if}} />
-          <label>
-            <span>{{waterHeatingTypeSpecified}}</span>
-            <span></span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column question">
-      <span>Est-ce qu'il y a un sous-sol ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if basementIncluded}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Oui</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if basementNotIncluded}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group column question">
-      <span>Si sous-sol chauffé, est ce que le plancher bas est isolé ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if lowFloorInsulationPeriodMoreThanTenYears}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">+10 ans</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if lowFloorInsulationPeriodLessThanTenYears}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">-10 ans</span>
-          </label>
-        </div>
-      </div>
-    </div>
-    <div class="form-group column question">
-      <span>Y'a t'il une cave, un local technique ou un garage de 1.9m de hauteur et 2m² de surface pour mettre une chaudière a granulés ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if basementAreaForBoiler}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-green">Oui</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if nonBasementAreaForBoiler}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span class="color-red">Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="form-group column question">
-      <span>Si radiateur, quel type ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if radiatorTypeClassic}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Classique</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if radiatorTypeElectric}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Electrique</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group column question">
-      <span>Est-ce que la maison dispose d'une cheminée ?</span>
-      <div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if fireplaceIncluded}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Oui</span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <input type="checkbox" {{#if fireplaceNotIncluded}}checked{{/if}} />
-          <label>
-            <span></span>
-            <span>Non</span>
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="form-group">
-      <span>Numéro de portable</span>
-      <span>{{phone}}</span>
-    </div>
-
-    <div class="page-break"></div>
-
-    <div class="form-group column">
-      <span>Commentaires sur les combles</span>
-      <span>{{loftComments}}</span>
-    </div>
-
-    <div class="page-break"></div>
-
-    <div class="form-group column">
-      <span>Autres commentaires</span>
-      <span>{{comments}}</span>
     </div>
 
     <div id="footer">

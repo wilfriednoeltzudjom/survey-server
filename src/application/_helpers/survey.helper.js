@@ -11,6 +11,7 @@ const {
   WATER_HEATING_TYPES,
   RADIATOR_TYPES,
   OPERATION_TYPES,
+  INSULATION_TYPES,
 } = require('../../database/enums');
 const MESSAGES = require('../messages');
 
@@ -85,6 +86,8 @@ function formatCheckboxesProperties({
   basementAreaForBoiler,
   radiatorType,
   operationType,
+  basementInsulated,
+  insulationType,
 }) {
   const additionalProperties = {};
   if (loftIncluded) additionalProperties.loftNotInsulated = !loftInsulated;
@@ -96,6 +99,7 @@ function formatCheckboxesProperties({
   if (basementIncluded) {
     additionalProperties.basementNotHeated = !basementHeated;
     additionalProperties.nonBasementAreaForBoiler = !basementAreaForBoiler;
+    additionalProperties.basementNotInsulated = !basementInsulated;
   }
 
   return {
@@ -136,6 +140,9 @@ function formatCheckboxesProperties({
     operationTypeMPR: operationType === OPERATION_TYPES.MPR,
     operationTypeRENO: operationType === OPERATION_TYPES.RENO,
     operationTypeRAC: operationType === OPERATION_TYPES.RAC,
+    insulationTypeLoft: insulationType === INSULATION_TYPES.LOFT,
+    insulationTypeBasement: insulationType === INSULATION_TYPES.BASEMENT,
+    insulationTypeWall: insulationType === INSULATION_TYPES.WALL,
     ...additionalProperties,
   };
 }

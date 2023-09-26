@@ -22,6 +22,10 @@ function isNotEmptyString(value) {
   return isValidValue(value) && isString(value) && value.length > 0;
 }
 
+function isNonEmptyString(value) {
+  return isNotEmptyString(value);
+}
+
 function isNonEmptyObject(value) {
   return isValidValue(value) && isObject(value) && Object.keys(value).length > 0;
 }
@@ -88,6 +92,7 @@ module.exports = {
   isEnum,
   isValidValue,
   isNotEmptyString,
+  isNonEmptyString,
   isJSONString,
   isNonEmptyObject,
   isNullishOrEmpty,

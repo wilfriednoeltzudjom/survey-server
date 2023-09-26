@@ -11,6 +11,7 @@ const ROLES = require('./roles');
 const RADIATOR_TYPES = require('./radiatorTypes');
 const OPERATION_TYPES = require('./operationTypes');
 const ACCOUNT_STATUSES = require('./accountStatuses');
+const INSULATION_TYPES = require('./insulationTypes');
 
 module.exports = {
   BUILDING_AGES,
@@ -26,4 +27,5 @@ module.exports = {
   RADIATOR_TYPES,
   OPERATION_TYPES,
   ACCOUNT_STATUSES,
+  INSULATION_TYPES,
 };
