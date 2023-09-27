@@ -3,7 +3,7 @@ const MESSAGES = require('../../application/messages');
 const { BadRequestError } = require('../../application/_helpers/errors');
 const energyRenovationPremiumEligibilityHelper = require('../../application/_helpers/energyRenovationPremiumEligibility.helper');
 const surveyHelper = require('../../application/_helpers/survey.helper');
-const { removeNullishInObject, isNonEmptyObject, isNonEmptyString } = require('../../application/_helpers/dataValidator.helper');
+const { removeNullishInObject, isNonEmptyObject, isNonEmptyString, isNullishOrEmpty } = require('../../application/_helpers/dataValidator.helper');
 
 module.exports = function buildCreateSurvey(dependencies) {
   const SURVEY_REFERENCE_PREFIX = 'DOC-POEYA-';
@@ -26,11 +26,15 @@ module.exports = function buildCreateSurvey(dependencies) {
   }
 
   async function ensureTaxNoticeIsValid({ occupants: [occupant = {}] = [] }) {
+    if (isNullishOrEmpty(occupant.taxNoticeNumber) || isNullishOrEmpty(occupant.taxNoticeReference)) return;
+
     const taxNoticeValid = await fiscalInformationUtilities.isTaxNoticeValid(occupant);
     if (!taxNoticeValid) throw new BadRequestError(MESSAGES.TAX_NOTICE_NOT_VALID);
   }
 
   async function ensureSurveyDoesNotExist({ occupants: [occupant = {}] = [] }) {
+    if (isNullishOrEmpty(occupant.taxNoticeNumber) || isNullishOrEmpty(occupant.taxNoticeReference)) return;
+
     const existingSurveysCount = await Survey.countDocuments({
       deleted: false,
       'occupants.taxNoticeNumber': occupant.taxNoticeNumber,

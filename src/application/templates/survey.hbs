@@ -670,11 +670,11 @@
 
     <div class="form-group">
       <span>Numéro fiscal 1</span>
-      <span>{{occupantOne.taxNoticeNumber}}</span>
+      {{#if occupantOne.taxNoticeNumber}}<span>{{occupantOne.taxNoticeNumber}}</span>{{/if}}
     </div>
     <div class="form-group">
       <span>Référence de l'avis 1</span>
-      <span>{{occupantOne.taxNoticeReference}}</span>
+      {{#if occupantOne.taxNoticeReference}}<span>{{occupantOne.taxNoticeReference}}</span>{{/if}}
     </div>
     <div class="form-group">
       <span>Revenu fiscal de référence 1</span>
