@@ -8,12 +8,9 @@ const { removeNullishInObject, isNonEmptyObject, isNonEmptyString, isNullishOrEm
 module.exports = function buildCreateSurvey(dependencies) {
   const SURVEY_REFERENCE_PREFIX = 'DOC-POEYA-';
 
-  const { fiscalInformationUtilities } = dependencies;
-
   async function execute(surveyData = {}, { user } = {}) {
     const survey = new Survey(removeNullishInObject({ ...surveyData, createdBy: user.id }));
     await survey.validate();
-    await ensureTaxNoticeIsValid(survey);
     await ensureSurveyDoesNotExist(survey);
     await setSurveyReference(survey);
     setEnergyRenovationPremiumsSituations(survey);
@@ -23,13 +20,6 @@ module.exports = function buildCreateSurvey(dependencies) {
     await survey.populate('createdBy');
 
     return survey;
-  }
-
-  async function ensureTaxNoticeIsValid({ occupants: [occupant = {}] = [] }) {
-    if (isNullishOrEmpty(occupant.taxNoticeNumber) || isNullishOrEmpty(occupant.taxNoticeReference)) return;
-
-    const taxNoticeValid = await fiscalInformationUtilities.isTaxNoticeValid(occupant);
-    if (!taxNoticeValid) throw new BadRequestError(MESSAGES.TAX_NOTICE_NOT_VALID);
   }
 
   async function ensureSurveyDoesNotExist({ occupants: [occupant = {}] = [] }) {
